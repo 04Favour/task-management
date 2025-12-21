@@ -21,6 +21,11 @@ export class AuthController {
     return this.authService.signIn(credentials)
   }
 
+  @Get('/ezekiel')
+  greetings(){
+    return "Good evening Emediong"
+  }
+
   @UseGuards(AuthGuard())
   @Get('protected')
   Protected(@Req() req){
