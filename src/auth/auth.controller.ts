@@ -23,7 +23,7 @@ export class AuthController {
 
   @Get('ezekiel')
   greetings(){
-    return "Good evening Emediong"
+    return "Good evening Divine"
   }
 
   @UseGuards(AuthGuard())
