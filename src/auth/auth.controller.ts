@@ -21,7 +21,7 @@ export class AuthController {
     return this.authService.signIn(credentials)
   }
 
-  @Get('/ezekiel')
+  @Get('ezekiel')
   greetings(){
     return "Good evening Emediong"
   }
