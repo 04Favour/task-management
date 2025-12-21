@@ -22,8 +22,9 @@ import { ConfigValidation } from './common/schema.validation';
       port: configService.get<number>('DB_PORT'),
       password: configService.get<string>('DB_PASSWORD'),
       database: configService.get<string>('DATABASE'),
+      ssl: process.env.STAGE === 'prod'?{rejectUnauthorized: false}: false,
       autoLoadEntities: true,
-      synchronize: true
+      synchronize: false
     }),
     // autoLoadEntities: true,
     // synchronize: true,
