@@ -21,9 +21,9 @@ export class AuthController {
     return this.authService.signIn(credentials)
   }
 
-  @Get('ezekiel')
+  @Get()
   greetings(){
-    return "Good evening Divine"
+    return "Greetings Oga Fred"
   }
 
   @UseGuards(AuthGuard())
