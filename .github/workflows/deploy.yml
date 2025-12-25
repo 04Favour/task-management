@@ -15,7 +15,7 @@ jobs:
       - name: Install & Build
         run: |
           npm ci
-          npm run Build
+          npm run build
       
       - name: Move build to Production
         run: |
