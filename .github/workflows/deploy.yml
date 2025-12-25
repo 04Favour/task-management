@@ -19,7 +19,7 @@ jobs:
       
       - name: Move build to Production
         run: |
-          mkdir -p ~/task-management
+          mkdir -p ~/task-management/dist
           rsync -avz --delete dist/ package.json package-lock.json ecosystem.config.js ~/task-management/
 
           echo "DATABASE=${{ secrets.DATABASE }}" > ~/task-management/.env.stage.prod
