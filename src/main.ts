@@ -15,6 +15,7 @@ async function bootstrap() {
     forbidNonWhitelisted: true,
     whitelist: true
   }));
+  app.setGlobalPrefix('api/v1')
   const port = process.env.PORT
   if(port === undefined) throw new InternalServerErrorException()
   await app.listen(port, ()=> logger.log(`Server running on port: ${port}`));
