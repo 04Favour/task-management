@@ -40,6 +40,7 @@ jobs:
           JWT_SECRET=${{ secrets.JWT_SECRET }}
           DB_PASSWORD=${{ secrets.DB_PASSWORD }}
           DB_USERNAME=${{ secrets.DB_USERNAME }}
+          EXPIRES_IN=${{secrets.EXPIRES_IN}}
           DB_PORT=${{ secrets.DB_PORT }}
           PORT=${{ secrets.PORT }}
           DB_HOST=${{ secrets.DB_HOST }}
@@ -47,6 +48,7 @@ jobs:
 
       - name: Deploy with Docker Compose
         run: |
+          docker system prune -a -f
           docker compose pull
           docker compose up -d --no-deps
           docker image prune -f
