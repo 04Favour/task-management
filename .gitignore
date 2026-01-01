@@ -1,3 +1,6 @@
+#Dockerignore
+.dockerignore
+
 # EC2 Instance Key
 /task-management-key.pem
 

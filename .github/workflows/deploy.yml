@@ -48,7 +48,6 @@ jobs:
 
       - name: Deploy with Docker Compose
         run: |
-          docker system prune -a -f
           docker compose pull
-          docker compose up -d --no-deps
+          docker compose up -d --force-recreate --no-deps
           docker image prune -f
