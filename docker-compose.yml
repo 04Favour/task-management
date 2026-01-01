@@ -4,3 +4,4 @@ services:
     ports:
       - "3009:3009"
     env_file: .env.stage.prod
+    restart: always
