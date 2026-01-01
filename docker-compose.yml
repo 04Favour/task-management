@@ -1,4 +1,6 @@
 services:
   task-management-app:
     image: favourmfon004/task-management-app:latest
+    ports:
+      - "3009:3009"
     env_file: .env.stage.prod
