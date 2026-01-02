@@ -44,7 +44,6 @@ jobs:
           DB_PORT=${{ secrets.DB_PORT }}
           PORT=${{ secrets.PORT }}
           DB_HOST=${{ secrets.DB_HOST }}
-          password: ${{secrets.DOCKERHUB_TOKEN}}
           EOF
 
       - name: Deploy with Docker Compose
