@@ -24,7 +24,9 @@ import { ConfigValidation } from './common/schema.validation';
       database: configService.get<string>('DATABASE'),
       ssl: process.env.STAGE === 'prod'?{rejectUnauthorized: false}: false,
       autoLoadEntities: true,
-      synchronize: true //Will change this soon for production to false
+      synchronize: false,
+      migrations: [__dirname + '/migrations/*{.ts,.js}'],
+      migrationsRun: true
     }),
     // autoLoadEntities: true,
     // synchronize: true,
