@@ -15,4 +15,4 @@ RUN npm ci --omit=dev && npm cache clean --force
 
 USER node
 EXPOSE 3009
-CMD ["node","--max-old-space-size=400", "dist/main.js"]
+CMD ["node","--max-old-space-size=400", "dist/src/main.js"]

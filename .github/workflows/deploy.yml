@@ -49,7 +49,6 @@ jobs:
       - name: Deploy with Docker Compose
         run: |
           cd ${{github.workspace}}
-          docker compose down || true
-          docker system prune -af
           docker compose pull
-          docker compose up -d 
+          docker compose up -d --remove-orphans
+          docker image prune -f
