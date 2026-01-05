@@ -8,26 +8,37 @@ jobs:
   build-and-push:
     runs-on: ubuntu-latest
     steps: 
-    - name: Checkout Code
-      uses: actions/checkout@v4
+      - name: Checkout Code
+        uses: actions/checkout@v4
 
-    - name: Login to DockerHub
-      uses: docker/login-action@v3
-      with: 
-        username: ${{secrets.DOCKERHUB_USERNAME}}
-        password: ${{secrets.DOCKERHUB_TOKEN}}
+      - name: Login to DockerHub
+        uses: docker/login-action@v3
+        with: 
+          username: ${{ secrets.DOCKERHUB_USERNAME }}
+          password: ${{ secrets.DOCKERHUB_TOKEN }}
 
-    - name: Build and Push
-      uses: docker/build-push-action@v5
-      with: 
-        context: .
-        push: true
-        tags: ${{secrets.DOCKERHUB_USERNAME}}/task-management-app:latest
+      - name: Build and Push
+        uses: docker/build-push-action@v5
+        with: 
+          context: .
+          push: true
+          tags: ${{ secrets.DOCKERHUB_USERNAME }}/task-management-app:latest
 
-  deploy: 
+  pre-cleanup:
     needs: build-and-push
     runs-on: self-hosted
+    steps:
+      - name: Hard Cleanup and Space Recovery
+        run: |
+          echo "Starting hard cleanup..."
+          docker system prune -af --volumes
+          npm cache clean --force
+          rm -rf ${{ github.workspace }}/*
+          sudo journalctl --vacuum-time=1d
 
+  deploy: 
+    needs: [build-and-push, pre-cleanup]
+    runs-on: self-hosted
     steps: 
       - name: Checkout Code
         uses: actions/checkout@v4
@@ -40,7 +51,7 @@ jobs:
           JWT_SECRET=${{ secrets.JWT_SECRET }}
           DB_PASSWORD=${{ secrets.DB_PASSWORD }}
           DB_USERNAME=${{ secrets.DB_USERNAME }}
-          EXPIRES_IN=${{secrets.EXPIRES_IN}}
+          EXPIRES_IN=${{ secrets.EXPIRES_IN }}
           DB_PORT=${{ secrets.DB_PORT }}
           PORT=${{ secrets.PORT }}
           DB_HOST=${{ secrets.DB_HOST }}
@@ -48,7 +59,7 @@ jobs:
 
       - name: Deploy with Docker Compose
         run: |
-          cd ${{github.workspace}}
+          cd ${{ github.workspace }}
           docker compose pull
           docker compose up -d --remove-orphans
           docker image prune -f
