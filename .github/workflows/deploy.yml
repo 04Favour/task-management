@@ -45,7 +45,7 @@ jobs:
   
       - name: Create Env File
         run: |
-          cat <<EOF > .env.stage.prod
+          cat << EOF > .env.stage.prod
           STAGE=prod
           DATABASE=${{ secrets.DATABASE }}
           JWT_SECRET=${{ secrets.JWT_SECRET }}
