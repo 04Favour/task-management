@@ -25,10 +25,10 @@ describe('TaskController', ()=> {
     }
 
     const mockTaskFactory = (overrides: Partial<Task> = {}): Task => ({
-        id: '1',
-        title: 'Test Task',
+        // id: '1',
+        title: 'Test title',
         description: 'Test Description',
-        status: TaskStatus.OPEN,
+        // status: TaskStatus.OPEN,
         ...overrides,
       } as Task);
 
@@ -56,7 +56,7 @@ describe('TaskController', ()=> {
     describe('GetTaskById', ()=> {
         it('should call taskService.GetTaskById and return the result', async () => {
             const user= {id:'123', username:'Favour Mfon'} as Users;
-            const expectedResult = {id: '1', title: 'Test'} as Task;
+            const expectedResult = mockTaskFactory();
 
             mockTaskService.GetTaskById.mockResolvedValue(expectedResult)
 
@@ -78,14 +78,14 @@ describe('TaskController', ()=> {
         it('should create task', async ()=> {
         const dto = {title: 'Test title', description: 'Test Description'} as CreateTaskDto;
         const user= {id:'123', username:'Favour Mfon'} as Users;
-        const expectedResult = {title: 'Test title', description: 'Test Description'} as Task
+        const expectedResult = mockTaskFactory()
 
         mockTaskService.createTask.mockResolvedValue(dto)
 
         const result = await controller.createTask(dto, user)
 
         expect(result).toEqual(expectedResult)
-        expect(mockTaskService.createTask).toHaveBeenCalledWith(dto, user)
+        expect(taskService.createTask).toHaveBeenCalledWith(dto, user)
         })
     })
 
@@ -102,7 +102,7 @@ describe('TaskController', ()=> {
             const result = await controller.getTasks(filter, user)
 
             expect(result).toEqual(task)
-            expect(mockTaskService.getTasks).toHaveBeenCalledWith(filter, user)
+            expect(taskService.getTasks).toHaveBeenCalledWith(filter, user)
             expect(result[0].title).toContain('Read');
         })
     })
