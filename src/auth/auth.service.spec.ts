@@ -41,7 +41,7 @@ describe('AuthService', () => {
 
     // TEST 1: SUCCESS PATH
     it('should return an access token on successful sign in', async () => {
-      repository.findOne.mockResolvedValue({ username: 'Fred', password: 'hashedPassword' });
+      repository.findOne.mockResolvedValue({ username: 'Favour', password: 'hashedPassword' });
       (bcrypt.compare as jest.Mock).mockResolvedValue(true);
       await jwtService.signAsync.mockResolvedValue('fakeToken');
 
@@ -61,7 +61,7 @@ describe('AuthService', () => {
 
     // TEST 3: WRONG PASSWORD PATH
     it('should throw UnauthorizedException if password does not match', async () => {
-      repository.findOne.mockResolvedValue({ username: 'Fred', password: 'hashedPassword' });
+      repository.findOne.mockResolvedValue({ username: 'Favour', password: 'hashedPassword' });
       
       // Mock bcrypt to return false (password mismatch)
       (bcrypt.compare as jest.Mock).mockResolvedValue(false);
