@@ -7,9 +7,10 @@ import { ConfigModule, ConfigService } from '@nestjs/config';
 import { APP_INTERCEPTOR } from '@nestjs/core';
 import { CustomSerializeInterceptor } from './transform.interceptor';
 import { ConfigValidation } from './common/schema.validation';
+import { TaskBotModule } from './task-copilot/taskbot.module';
 
 @Module({
-  imports: [TaskModule, ConfigModule.forRoot({isGlobal: true,
+  imports: [TaskBotModule, TaskModule, ConfigModule.forRoot({isGlobal: true,
     envFilePath:[`.env.stage.${process.env.STAGE}`],
     validationSchema: ConfigValidation
   }), TypeOrmModule.forRootAsync({

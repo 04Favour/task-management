@@ -35,4 +35,8 @@ export class TaskService {
     getTasks(filterDto: GetTasksFilterDto, user: Users){
         return this.tasksRepository.getTasks(filterDto, user)
     }
+
+    getTasksForBot(user: Users){
+       return this.tasksRepository.getTaskforBot(user)
+    }
 }

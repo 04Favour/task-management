@@ -37,4 +37,11 @@ export class TasksRepository extends Repository<Task>{
         const task = query.getMany()
         return task
     }
+
+    async getTaskforBot(user: Users): Promise<Task[]>{
+        const query = this.createQueryBuilder('task')
+        query.where({user})
+        const task = query.getMany()
+        return task
+    }
 }

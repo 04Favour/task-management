@@ -23,6 +23,7 @@
     "migration:run": "npm run typeorm -- -d typeorm.config.ts migration:run"
   },
   "dependencies": {
+    "@google/generative-ai": "^0.24.1",
     "@nestjs/common": "^11.0.1",
     "@nestjs/config": "^4.0.2",
     "@nestjs/core": "^11.0.1",
@@ -85,7 +86,7 @@
     ],
     "coverageDirectory": "../coverage",
     "moduleNameMapper": {
-    "^src/(.*)$": "<rootDir>/$1"
+      "^src/(.*)$": "<rootDir>/$1"
     },
     "testEnvironment": "node"
   }
