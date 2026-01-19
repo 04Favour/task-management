@@ -1,7 +1,6 @@
-import { Injectable } from "@nestjs/common";
+import { ConflictException, Injectable, InternalServerErrorException } from "@nestjs/common";
 import { GeminiProvider } from "./gemini.provider";
 import { TaskService } from "src/task/task.service";
-import { ACTIONS } from "./action";
 import { Users } from "src/auth/users.entity";
 
 @Injectable()
@@ -9,13 +8,6 @@ export class TaskBotService {
     constructor(private gemini: GeminiProvider, private taskService: TaskService){}
 
     async handle(user: Users, userMessage: string){
-        // const prompt = `
-        // ${ACTIONS}
-        
-        // user message: 
-        // "${userMessage}"
-        // JSON OUTPUT:`;
-
         const raw = await this.gemini.generate(userMessage)
         const cleanJson = raw.replace(/```json|```/g, "").trim();
         try {
@@ -23,11 +15,17 @@ export class TaskBotService {
 
         switch(response.action) {
             case 'createTask': 
-                return this.taskService.createTask(response.data, user)
+                try {
+                    return this.taskService.createTask(response.data, user)
+                } catch(error){
+                    console.log(error.code)
+                    if(error.code === '23505') throw new ConflictException();
+                    throw new InternalServerErrorException()
+                }  
             case 'updateStatus':
                 return this.taskService.updateStatus(response.data.id, response.data.status, user)
             case 'getTasks':
-                return this.taskService.getTasks(response.data.status, user)
+                return this.taskService.getTasks(response.data, user)
             case 'summarize':
                 return this.summarize(user)
             default: 

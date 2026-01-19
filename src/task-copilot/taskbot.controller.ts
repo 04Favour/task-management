@@ -1,9 +1,11 @@
-import { Body, Controller, Post } from "@nestjs/common";
+import { Body, Controller, Post, UseGuards } from "@nestjs/common";
 import { TaskBotService } from "./taskbot.service";
 import { GetUser } from "src/auth/get-user.decorator";
 import { Users } from "src/auth/users.entity";
+import { AuthGuard } from "@nestjs/passport";
 
 @Controller('bot')
+@UseGuards(AuthGuard())
 export class TaskBotController {
     constructor(private taskbotservice: TaskBotService){}
 
