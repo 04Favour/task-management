@@ -2,6 +2,7 @@ import { ConflictException, Injectable, InternalServerErrorException } from "@ne
 import { GeminiProvider } from "./gemini.provider";
 import { TaskService } from "src/task/task.service";
 import { Users } from "src/auth/users.entity";
+import { ACTIONS } from "./action";
 
 @Injectable()
 export class TaskBotService {
@@ -16,10 +17,11 @@ export class TaskBotService {
         switch(response.action) {
             case 'createTask': 
                 try {
-                    return this.taskService.createTask(response.data, user)
+                    return await this.taskService.createTask(response.data, user)
                 } catch(error){
-                    console.log(error.code)
-                    if(error.code === '23505') throw new ConflictException();
+                    if(error.code === '23505') {
+                             return { message: "That task already exists in your list!" };
+                        }
                     throw new InternalServerErrorException()
                 }  
             case 'updateStatus':
@@ -40,7 +42,7 @@ export class TaskBotService {
         const allTask = await this.taskService.getTasksForBot(user)
         return {
             total: allTask.length,
-            completed: allTask.filter((t)=>{t.status === 'done'}).length,
+            completed: allTask.filter(t => t.status === 'done').length,
             pending: allTask.filter(t => t.status === 'in_progress' || t.status === 'open').length    
         }
     }

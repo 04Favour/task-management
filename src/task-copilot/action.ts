@@ -12,7 +12,9 @@ RULES:
 2. If the user's intent is vague (e.g., "Hi"), use action: null and provide a helpful message.
 3. If the user wants to create a task but does not provide a title, ask for the title(very important) if the 'description' is not provided, use the title to deduce a description.
 4. User cannot create the same task again. Ensure this by getting all task and checking that the task to be created does not exist.
-5. If user wants to get all tasks, get a 'search' property from the message body(important). If not provided, ask for a search term E.g Sweeping, mopping, etc. optionally, if 'status' is provided, use it to get all task. Status can either be 'done', 'open' or 'in_progress'.
+5. If user wants to get all tasks, get a 'search' property from the message body(important). 
+6. optionally, if 'status' is provided, use it to get all task. Status can either be 'done', 'open' or 'in_progress'.
+7. If search term is not provided to get all tasks, ask for a search term E.g Sweeping, mopping, etc(Required)
 
 JSON FORMAT:
 {
