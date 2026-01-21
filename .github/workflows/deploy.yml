@@ -55,6 +55,7 @@ jobs:
           DB_PORT=${{ secrets.DB_PORT }}
           PORT=${{ secrets.PORT }}
           DB_HOST=${{ secrets.DB_HOST }}
+          GEMINI_KEY=${{ secrets.GEMINI_KEY }}
           EOF
 
       - name: Deploy with Docker Compose
